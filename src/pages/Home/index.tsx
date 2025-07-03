@@ -9,6 +9,7 @@ interface Set {
   release_date: string;
   icon_svg_uri: string;
   parent_set_code?: string;
+  // Talvez aqui tenha que ter um ChildSets : Set[]; ma num sei :b
 }
 
 function Home() {
