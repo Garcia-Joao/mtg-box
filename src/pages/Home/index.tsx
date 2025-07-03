@@ -21,8 +21,8 @@ function Home() {
 
   async function fetchSets(): Promise<void> {
     try {
-      const response = await api.get<ApiResponse>('/sets');
-      setSets(response.data.data);
+      const response = await api.get('/sets');
+      setSets(response.data);
     } catch (error) {
       console.error('Erro ao buscar sets:', error);
     }
