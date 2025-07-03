@@ -2,18 +2,17 @@ import './style.css';
 import api from '../../services/api';
 import { useEffect, useState } from 'react';
 
-interface SetData {
+interface Set {
   id: string;
   name: string;
+  code: string;
+  release_date: string;
   icon_svg_uri: string;
-}
-
-interface ApiResponse {
-  data: SetData[];
+  parent_set_code?: string;
 }
 
 function Home() {
-  const [sets, setSets] = useState<SetData[]>([]);
+  const [sets, setSets] = useState<Set[]>([]);
 
   useEffect(() => {
     fetchSets();
@@ -22,7 +21,15 @@ function Home() {
   async function fetchSets(): Promise<void> {
     try {
       const response = await api.get('/sets');
-      setSets(response.data);
+      const allSets: Set[] = response.data;
+
+      const parentItems: Set[] = allSets.filter((element) => !element.parent_set_code);
+      const childItems: Set[] = allSets.filter((element) => !!element.parent_set_code);
+
+      console.log('Parent Sets:', parentItems);
+      console.log('Child Sets:', childItems);
+
+      setSets(parentItems);
     } catch (error) {
       console.error('Erro ao buscar sets:', error);
     }
