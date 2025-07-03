@@ -1,6 +1,7 @@
 import './style.css';
 import api from '../../services/api';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Set {
   id: string;
@@ -9,11 +10,15 @@ interface Set {
   release_date: string;
   icon_svg_uri: string;
   parent_set_code?: string;
-  // Talvez aqui tenha que ter um ChildSets : Set[]; ma num sei :b
 }
 
 function Home() {
+  const navigate = useNavigate();
   const [sets, setSets] = useState<Set[]>([]);
+
+  function openSetCards(setCode: string): void {
+    navigate(`/cards/${setCode}`);
+  }
 
   useEffect(() => {
     fetchSets();
@@ -25,10 +30,6 @@ function Home() {
       const allSets: Set[] = response.data;
 
       const parentItems: Set[] = allSets.filter((element) => !element.parent_set_code);
-      const childItems: Set[] = allSets.filter((element) => !!element.parent_set_code);
-
-      console.log('Parent Sets:', parentItems);
-      console.log('Child Sets:', childItems);
 
       setSets(parentItems);
     } catch (error) {
@@ -46,7 +47,7 @@ function Home() {
         <br />
         <div className="scroll-container">
           {sets.map((set) => (
-            <div key={set.id} className="card">
+            <div key={set.id} className="set" onClick={() => openSetCards(set.code)}>
               <div className="set-item" title={set.name}>
                 <img src={set.icon_svg_uri} className="set-icon" alt={set.name} />
                 <span className="set-name">{set.name}</span>
