@@ -39,7 +39,6 @@ function Cards() {
     return (
         <>
             <header>
-                <h1>Cards</h1>
                 <div className="container">
                     {cards.map((card) => (
                         <div key={card.id} className="card">
