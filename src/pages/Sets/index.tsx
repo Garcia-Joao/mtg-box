@@ -3,6 +3,7 @@ import api from '../../services/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@heroui/react";
 
 interface Set {
   id: string;
@@ -11,7 +12,6 @@ interface Set {
   release_date: string;
   icon_svg_uri: string;
   parent_set_code?: string;
-  // Talvez aqui tenha que ter um ChildSets : Set[]; ma num sei :b
   children: Set[];
 }
 
@@ -41,7 +41,7 @@ function Sets() {
       console.log('Child Sets:', childItems);
 
       const parentWithChildren = parentItems.map((parent) => {
-        const children = childItems.filter((child) => child.parent_set_code === parent.parent_set_code);
+        const children = childItems.filter((child) => child.parent_set_code === parent.code);
         return { ...parent, children };
       });
 
@@ -63,7 +63,7 @@ function Sets() {
       <main className="dark min-h-screen bg-gradient-to-br from-blue-800 via-gray-600 to-purple-800 text-foreground flex items-center justify-center py-10 px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl w-full">
           {sets.map((set) => (
-            <div
+            <Card
               key={set.id}
               onClick={() => openSetCards(set.code)}
               className="cursor-pointer transition-transform hover:scale-[1.03]"
@@ -74,16 +74,34 @@ function Sets() {
                   alt={set.name}
                   className="w-16 h-16 object-contain invert"
                 />
-                <span className="text-sm font-medium text-foreground truncate w-full" title={set.name}>
+                <span className="text-sm font-medium text-foreground truncate w-full mb-2" title={set.name}>
                   {set.name}
                 </span>
+                <Divider />
+                {set.children && set.children.length > 0 && (
+                  <div className="flex flex-col items-center mt-2">
+                  {set.children.map((child) => (
+                    <div
+                    className='flex mb-2'
+                    key={child.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openSetCards(child.code);
+                    }}
+                    title={child.name}
+                    >
+                      <img src={child.icon_svg_uri} className="set-icon child-icon" alt={child.name} />
+                      <span>{child.name}</span>
+                    </div>
+                  ))}
+                  </div>  
+              )}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </main>
     </motion.div>
-
   );
 }
 
