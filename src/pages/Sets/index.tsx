@@ -73,14 +73,14 @@ function Sets() {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4 }}
     >
-      <main className="min-h-screen text-foreground flex items-center justify-center py-10 px-4 bg-black">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl w-full">
+      <main className="min-h-screen text-foreground flex items-center justify-center py-10 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg: gap-6 max-w-6xl w-full">
           {sets.map((set) => (
-            <Card onClick={() => handleCardClick(set)}
-              className="transition-transform hover:scale-[1.03] rounded-xl backdrop-blur-sm border border-white/40 bg-white/20 "
+            <Card className="transition-transform hover:scale-[1.03] rounded-xl backdrop-blur-sm border border-white/40 bg-white/20 "
               key={set.id}
             >
-              <div className="shadow-md border-white/10 p-4 flex flex-row items-start">
+              <div className="shadow-md border-white/10 p-4 flex flex-row items-start"
+              onClick={() => handleCardClick(set)}>
                 <img
                   src={set.icon_svg_uri}
                   alt={set.name}
