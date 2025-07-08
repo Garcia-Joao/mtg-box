@@ -74,20 +74,27 @@ function Cards() {
         return baseString;
     }
 
-    async function fetchSetCards(setCode: string): Promise<void> {
-        try {
-            const response = await api.get(`/cards/${setCode}`);
-            const cardsWithFaces = response.data.map((card: Card) => ({
+async function fetchSetCards(setCode: string): Promise<void> {
+    try {
+        const response = await api.get(`/cards/${setCode}`);
+
+        const cardsWithFaces = response.data.map((card: Card) => {
+            const isImageMissing = !card.image_uris || Object.keys(card.image_uris).length === 0;
+            const isMultiFaced = isImageMissing && Array.isArray(card.card_faces) && card.card_faces.length > 0;
+
+            return {
                 ...card,
-                multifaced: card.card_faces && card.card_faces.length > 0,
+                multifaced: isMultiFaced,
                 currentFace: 0,
-            }));
-            setCards(cardsWithFaces);
-            toggleLoad();
-        } catch (error) {
-            console.error('Erro ao buscar cartas:', error);
-        }
+            };
+        });
+
+        setCards(cardsWithFaces);
+        toggleLoad();
+    } catch (error) {
+        console.error('Erro ao buscar cartas:', error);
     }
+}
 
     function getCardImage(cardData: Card, faceIndex: number = 0) {
         if (cardData.multifaced) {
