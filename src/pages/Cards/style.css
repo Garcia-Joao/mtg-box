@@ -1,34 +1,47 @@
-.container {
-  display: flex;
-  flex-wrap: wrap;       /* Para mostrar vários cards lado a lado */
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+.flip-card {
+  perspective: 1000px;
+  cursor: pointer;
+  width: 250px;
+  height: 350px;
+  position: relative;
+  transition: transform 0.3s ease;
+  margin: auto;
 }
 
-.card {
-  width: 300px;
-  height: 420px; /* Ajuste para ter espaço para imagem + nome */
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column; /* Coluna para imagem em cima e nome embaixo */
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px;
+.flip-card:hover {
+  transform: translateY(-10px) scale(1.05);
 }
 
-.card-image {
-  max-width: 100%;
-  max-height: 350px;
-  border-radius: 10px;
-  object-fit: contain;
-  margin-bottom: 10px;
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
 }
 
-.card-name {
-  font-weight: bold;
-  text-align: center;
-  color: darkgray;
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+.flip-card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  z-index: 1;
 }
