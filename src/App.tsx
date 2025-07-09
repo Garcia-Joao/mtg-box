@@ -8,6 +8,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Home from './pages/Home';
 import Sets from './pages/Sets';
+import SignIn from './pages/SignIn';
+import RegisterUser from './pages/RegisterUser';
 import Cards from './pages/Cards';
 import Layout from './components/layout';
 
@@ -38,6 +40,28 @@ function AnimatedRoutes() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Sets />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/signIn"
+            element={
+              <SignIn />
+            }
+          />
+          <Route
+            path="/RegisterUser"
+            element={
+              <RegisterUser />
+            }
+          />
+          <Route
+            path="/cards/:setCode"
+            element={
+              <motion.div
                 transition={{ duration: 0.4 }}
               >
                 <Sets />

@@ -28,6 +28,11 @@ export default function Layout() {
               Sets
             </Button>
           </NavbarItem>
+          <NavbarItem>
+            <Button as={Link} href="/signIn" color="primary" variant="solid">
+              Login
+            </Button>
+          </NavbarItem>
         </NavbarContent>
       </Navbar>
 
