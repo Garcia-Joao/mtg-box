@@ -162,7 +162,11 @@ async function fetchSetCards(setCode: string): Promise<void> {
                 ) : (
                     <div className="gap-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 content-center mx-40">
                         {cards.map((card) => (
-                            <Card key={card.id} className="w-[250px] h-[400px] flex flex-col overflow-hidden relative">
+                            <Card key={card.id} className="w-[250px] h-[400px] flex flex-col overflow-hidden relative ease-in-out 
+                            hover:-translate-y-2 
+                            hover:shadow-2xl 
+                            hover:scale-[1.02] 
+                            hover:rotate-[0.5deg]" isPressable>
                                 {/* Card Flip Section */}
                                 <div className="relative perspective-1000 w-full h-[350px]">
                                     <motion.div
